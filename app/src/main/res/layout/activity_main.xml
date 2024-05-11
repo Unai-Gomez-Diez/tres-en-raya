@@ -15,70 +15,78 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:src="@drawable/ic_circle"/>
+        android:src="@drawable/ic_circle"/>
     <ImageView
+        android:id="@+id/initmid"
         android:layout_width="@dimen/dimen_forms"
         android:layout_height="@dimen/dimen_forms"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/midmid"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:src="@drawable/ic_circle"/>
+        android:src="@drawable/ic_circle"/>
     <ImageView
+        android:id="@+id/endmid"
         android:layout_width="@dimen/dimen_forms"
         android:layout_height="@dimen/dimen_forms"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/midmid"
         app:layout_constraintTop_toTopOf="parent"
-        tools:src="@drawable/ic_circle"/>
+        android:src="@drawable/ic_circle"/>
     <ImageView
+        android:id="@+id/endinit"
         android:layout_width="@dimen/dimen_forms"
         android:layout_height="@dimen/dimen_forms"
         app:layout_constraintBottom_toTopOf="@id/midmid"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/midmid"
         app:layout_constraintTop_toTopOf="parent"
-        tools:src="@drawable/ic_circle"/>
+        android:src="@drawable/ic_circle"/>
     <ImageView
+        android:id="@+id/initinit"
         android:layout_width="@dimen/dimen_forms"
         android:layout_height="@dimen/dimen_forms"
         app:layout_constraintBottom_toTopOf="@id/midmid"
         app:layout_constraintEnd_toStartOf="@id/midmid"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:src="@drawable/ic_circle"/>
+        android:src="@drawable/ic_circle"/>
     <ImageView
+        android:id="@+id/midinit"
         android:layout_width="@dimen/dimen_forms"
         android:layout_height="@dimen/dimen_forms"
         app:layout_constraintBottom_toTopOf="@id/midmid"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:src="@drawable/ic_circle"/>
+        android:src="@drawable/ic_circle"/>
     <ImageView
+        android:id="@+id/initend"
         android:layout_width="@dimen/dimen_forms"
         android:layout_height="@dimen/dimen_forms"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/midmid"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/midmid"
-        tools:src="@drawable/ic_circle"/>
+        android:src="@drawable/ic_circle"/>
     <ImageView
+        android:id="@+id/endend"
         android:layout_width="@dimen/dimen_forms"
         android:layout_height="@dimen/dimen_forms"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/midmid"
         app:layout_constraintTop_toBottomOf="@id/midmid"
-        tools:src="@drawable/ic_circle"/>
+        android:src="@drawable/ic_circle"/>
     <ImageView
+        android:id="@+id/midend"
         android:layout_width="@dimen/dimen_forms"
         android:layout_height="@dimen/dimen_forms"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/midmid"
-        tools:src="@drawable/ic_circle"/>
+        android:src="@drawable/ic_circle"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

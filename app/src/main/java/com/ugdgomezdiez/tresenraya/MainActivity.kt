@@ -2,6 +2,7 @@ package com.ugdgomezdiez.tresenraya
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.ImageView
 import com.google.gson.Gson
 import com.ugdgomezdiez.tresenraya.feature.tresenraya.data.GameDataRepository
 import com.ugdgomezdiez.tresenraya.feature.tresenraya.data.xml.GameXmlLocalDataSource
@@ -20,8 +21,19 @@ class MainActivity : AppCompatActivity() {
         )
 
         val piece = Piece(
-            2,0,true
+            0,0,true
         )
-        gameRepository.setGameTurn(piece)
+
+
+        val vista1 = findViewById<ImageView>(R.id.initinit)
+        vista1.setOnClickListener {
+            piece.valueX = 1
+            piece.valueY = 0
+            gameRepository.setGameTurn(piece)
+        }
+
+
     }
+
+
 }

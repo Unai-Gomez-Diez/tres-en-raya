@@ -1,5 +1,6 @@
 package com.ugdgomezdiez.tresenraya.feature.tresenraya.data
 
+import android.util.Log
 import com.ugdgomezdiez.tresenraya.feature.tresenraya.data.xml.GameXmlLocalDataSource
 import com.ugdgomezdiez.tresenraya.feature.tresenraya.domain.GameRepository
 import com.ugdgomezdiez.tresenraya.feature.tresenraya.domain.Piece
@@ -26,9 +27,12 @@ class GameDataRepository(
         return if(board[turn.valueY][turn.valueX] == null){
             board[turn.valueY][turn.valueX] = turn
             gameXmlLocalDataSource.setGameTurn(board)
+            Log.d("@dev", "true")
             true
         }else{
+            Log.d("@dev", "false")
             false
+
         }
     }
 }
