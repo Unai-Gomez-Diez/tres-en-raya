@@ -33,6 +33,10 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+    buildFeatures{
+        viewBinding = true
+        buildConfig = true
+    }
 }
 
 dependencies {
@@ -53,6 +57,9 @@ dependencies {
 
 
     implementation("androidx.preference:preference-ktx:1.2.1")
+
+    //Fragment
+    implementation("androidx.fragment:fragment-ktx:1.6.2")
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
