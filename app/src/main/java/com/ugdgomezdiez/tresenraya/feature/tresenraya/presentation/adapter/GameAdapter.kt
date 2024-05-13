@@ -23,6 +23,6 @@ class GameAdapter : ListAdapter<Piece, GameViewHolder>(GameDiffUtil()) {
 
     override fun getItemCount(): Int = currentList.size
     override fun onBindViewHolder(holder: GameViewHolder, position: Int) {
-        holder.bind(currentList[position])
+        holder.bind(currentList[position], onClick)
     }
 }

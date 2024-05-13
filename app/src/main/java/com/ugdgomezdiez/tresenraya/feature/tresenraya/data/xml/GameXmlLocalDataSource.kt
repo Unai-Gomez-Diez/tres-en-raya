@@ -10,17 +10,22 @@ class GameXmlLocalDataSource(val context: Context, val gson: Gson)
     :GameLocalDataSource {
 
         val sharedPref = context.getSharedPreferences("Game", MODE_PRIVATE)
-    override fun getGame(): Array<Array<Piece?>> {
+    override fun getGame(): Array<Array<Piece>>? {
         val gameJson = sharedPref.getString("game", null)
-        return if (gameJson != null) {
-            gson.fromJson(gameJson, Array<Array<Piece?>>::class.java)
-        } else {
-            // Si el JSON es nulo, inicializa un nuevo juego vacío
-            Array(3) { Array(3) { null } }
-        }
+
+        return gson.fromJson(gameJson, Array<Array<Piece>>::class.java)
+
     }
 
-    override fun setGameTurn(trun: Array<Array<Piece?>>) {
+    override fun setPiece(trun: Array<Array<Piece>>) {
         sharedPref.edit().putString("game", gson.toJson(trun)).apply()
+    }
+
+    override fun setTurn(turn: Int) {
+        sharedPref.edit().putInt("turn", turn).apply()
+    }
+
+    override fun getTurn(): Int {
+        return sharedPref.getInt("turn", 0)
     }
 }

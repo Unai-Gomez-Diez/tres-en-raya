@@ -6,18 +6,25 @@ import com.ugdgomezdiez.tresenraya.R
 import com.ugdgomezdiez.tresenraya.databinding.ItemPieceBinding
 import com.ugdgomezdiez.tresenraya.feature.tresenraya.domain.Piece
 
-class GameViewHolder(view: View): RecyclerView.ViewHolder(view) {
-    private var binding: ItemPieceBinding = ItemPieceBinding.bind(view)
+class GameViewHolder(val view: View): RecyclerView.ViewHolder(view) {
+    private lateinit var binding: ItemPieceBinding
 
-    fun bind(model: Piece?) {
-        model?.let {
-            binding.apply {
-                if (it.turn == true) {
-                    piece.setImageResource(R.drawable.ic_x)
-                } else {
-                    piece.setImageResource(R.drawable.ic_circle)
-                }
+    fun bind(model: Piece?, onClick: (Piece) -> Unit) {
+        binding = ItemPieceBinding.bind(view)
+        binding.apply {
+            if (model?.selectPiece == true) {
+                piece.setImageResource(R.drawable.ic_x)
+
+            } else if(model?.selectPiece == false) {
+                piece.setImageResource(R.drawable.ic_circle)
+            }
+            view.setOnClickListener {
+                onClick.invoke(model!!)
             }
         }
+
+
+
+
     }
 }

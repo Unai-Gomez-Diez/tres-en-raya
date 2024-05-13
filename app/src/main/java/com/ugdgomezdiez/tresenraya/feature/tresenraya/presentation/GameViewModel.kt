@@ -5,16 +5,20 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ugdgomezdiez.tresenraya.feature.tresenraya.domain.GetGameUseCase
+import com.ugdgomezdiez.tresenraya.feature.tresenraya.domain.GetTurnUseCase
 import com.ugdgomezdiez.tresenraya.feature.tresenraya.domain.Piece
 import com.ugdgomezdiez.tresenraya.feature.tresenraya.domain.SetGameTurnUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class GameViewModel(private val setGameUseCase: SetGameTurnUseCase,
-    private val getGameUseCase: GetGameUseCase
+    private val getGameUseCase: GetGameUseCase,
+    private val getTurnUseCase: GetTurnUseCase
 ): ViewModel() {
     private val _uistate = MutableLiveData<UiState>()
     val uiState: LiveData<UiState> = _uistate
+
+
 
     fun setPiece(piece: Piece){
         _uistate.value = UiState(isLoading = true)
@@ -36,6 +40,16 @@ class GameViewModel(private val setGameUseCase: SetGameTurnUseCase,
         }
     }
 
+    fun getTurn(){
+        _uistate.value = UiState(isLoading = true)
+        viewModelScope.launch(Dispatchers.IO) {
+             getTurnUseCase.invoke().fold(
+                {responseError(it)},
+                {responseTurn(it)}
+            )
+        }
+    }
+
     private fun responseError(error: Error) =
         _uistate.postValue(UiState(error = error))
 
@@ -43,17 +57,26 @@ class GameViewModel(private val setGameUseCase: SetGameTurnUseCase,
         _uistate.postValue(UiState(succes = succes))
     }
 
-    private fun responseBoard(board: Array<Array<Piece?>>){
+    private fun responseBoard(board: Array<Array<Piece>>){
         _uistate.postValue(UiState(board = board))
+    }
+
+    private fun responseTurn(turn: Int){
+        _uistate.postValue(UiState(turn = turn))
     }
 
     data class UiState(
         val isLoading: Boolean = false,
         val error: Error? = null,
         val succes: Boolean? = null,
-        val board: Array<Array<Piece?>> = arrayOf(
-            arrayOf(null, null, null),
-            arrayOf(null, null, null),
-            arrayOf(null, null, null))
+        val turn: Int = 0,
+        val board: Array<Array<Piece>> = piecesArray
+
     )
+
+}
+val piecesArray = Array(3) { i ->
+    Array(3) { j ->
+        Piece(i, j, null)
+    }
 }

@@ -4,39 +4,51 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
 import com.ugdgomezdiez.tresenraya.databinding.FragmentGameBinding
 import com.ugdgomezdiez.tresenraya.feature.tresenraya.data.GameDataRepository
 import com.ugdgomezdiez.tresenraya.feature.tresenraya.data.xml.GameXmlLocalDataSource
 import com.ugdgomezdiez.tresenraya.feature.tresenraya.domain.GetGameUseCase
-import com.ugdgomezdiez.tresenraya.feature.tresenraya.domain.Piece
+import com.ugdgomezdiez.tresenraya.feature.tresenraya.domain.GetTurnUseCase
 import com.ugdgomezdiez.tresenraya.feature.tresenraya.domain.SetGameTurnUseCase
 import com.ugdgomezdiez.tresenraya.feature.tresenraya.presentation.adapter.GameAdapter
 
-class GameFragment: Fragment() {
+class GameFragment : Fragment() {
     private var _binding: FragmentGameBinding? = null
     private val binding get() = _binding!!
 
     private val gameAdapter = GameAdapter()
-    private val viewModel :GameViewModel by lazy{
+    private val viewModel: GameViewModel by lazy {
         GameViewModel(
             SetGameTurnUseCase(
                 GameDataRepository(
                     GameXmlLocalDataSource(
-                        this.requireContext(), Gson()))),
+                        this.requireContext(), Gson()
+                    )
+                )
+            ),
             GetGameUseCase(
                 GameDataRepository(
                     GameXmlLocalDataSource(
-                        this.requireContext(), Gson())))
+                        this.requireContext(), Gson()
+                    )
+                )
+            ),
+            GetTurnUseCase(
+                GameDataRepository(
+                    GameXmlLocalDataSource(
+                        this.requireContext(), Gson()
+                    )
+                )
+            )
         )
     }
+
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -45,6 +57,7 @@ class GameFragment: Fragment() {
     ): View {
         _binding = FragmentGameBinding.inflate(inflater, container, false)
         setupView()
+
         return binding.root
     }
 
@@ -52,6 +65,7 @@ class GameFragment: Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setupObserver()
         viewModel.getBoard()
+
     }
 
     private fun setupView() {
@@ -63,21 +77,24 @@ class GameFragment: Fragment() {
                     LinearLayoutManager.VERTICAL,
                     false
                 )
-                gameAdapter.setEvent{
+                gameAdapter.setEvent {
+
                     viewModel.setPiece(it)
                 }
                 adapter = gameAdapter
             }
         }
     }
+
     private fun setupObserver() {
-        val observer = Observer<GameViewModel.UiState>{
-            if (it.isLoading){
+        val observer = Observer<GameViewModel.UiState> {
+            if (it.isLoading) {
 
-            }else{
-                if(it.error != null){
+            } else {
+                if (it.error != null) {
 
-                }else{
+                } else {
+                    viewModel.getBoard()
                     val boardGame = it.board.flatten().toMutableList()
                     gameAdapter.submitList(boardGame)
 

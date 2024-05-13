@@ -9,5 +9,5 @@
         android:layout_height="@dimen/dimen_forms"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:src="@drawable/ic_circle"/>
+        android:src="@drawable/ic_check"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

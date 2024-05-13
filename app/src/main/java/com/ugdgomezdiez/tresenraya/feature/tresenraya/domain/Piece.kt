@@ -1,7 +1,7 @@
 package com.ugdgomezdiez.tresenraya.feature.tresenraya.domain
 
 data class Piece(
-    var valueX: Int,
-    var valueY: Int,
-    val turn: Boolean
+    val valueX: Int,
+    val valueY: Int,
+    var selectPiece: Boolean?
 )
