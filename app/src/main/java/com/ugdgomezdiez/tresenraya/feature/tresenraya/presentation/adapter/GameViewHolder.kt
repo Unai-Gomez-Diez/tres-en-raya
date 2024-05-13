@@ -22,9 +22,5 @@ class GameViewHolder(val view: View): RecyclerView.ViewHolder(view) {
                 onClick.invoke(model!!)
             }
         }
-
-
-
-
     }
 }

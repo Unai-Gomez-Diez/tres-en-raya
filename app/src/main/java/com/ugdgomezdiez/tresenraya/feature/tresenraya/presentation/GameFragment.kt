@@ -78,7 +78,6 @@ class GameFragment : Fragment() {
                     false
                 )
                 gameAdapter.setEvent {
-
                     viewModel.setPiece(it)
                 }
                 adapter = gameAdapter
