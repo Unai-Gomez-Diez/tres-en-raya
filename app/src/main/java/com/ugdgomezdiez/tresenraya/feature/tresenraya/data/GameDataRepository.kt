@@ -54,4 +54,9 @@ class GameDataRepository(
             turn
         }
     }
+
+    override fun cleanBoard(){
+        gameXmlLocalDataSource.cleanBoard()
+
+    }
 }

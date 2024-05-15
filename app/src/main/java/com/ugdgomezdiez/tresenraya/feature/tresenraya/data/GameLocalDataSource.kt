@@ -11,5 +11,7 @@ interface GameLocalDataSource {
 
     fun getTurn(): Int
 
+    fun cleanBoard()
+
 
 }

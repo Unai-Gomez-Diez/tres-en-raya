@@ -6,4 +6,6 @@ interface GameRepository {
     fun setPiece(piece:Piece): Boolean
 
     fun getTurn(): Int
+
+    fun cleanBoard()
 }

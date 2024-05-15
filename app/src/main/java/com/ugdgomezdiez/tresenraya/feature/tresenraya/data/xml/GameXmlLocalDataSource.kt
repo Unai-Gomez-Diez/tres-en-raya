@@ -28,4 +28,8 @@ class GameXmlLocalDataSource(val context: Context, val gson: Gson)
     override fun getTurn(): Int {
         return sharedPref.getInt("turn", 0)
     }
+
+    override fun cleanBoard() {
+        sharedPref.edit().clear().apply()
+    }
 }

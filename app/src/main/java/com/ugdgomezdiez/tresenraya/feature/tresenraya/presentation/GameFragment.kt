@@ -12,8 +12,10 @@ import com.google.gson.Gson
 import com.ugdgomezdiez.tresenraya.databinding.FragmentGameBinding
 import com.ugdgomezdiez.tresenraya.feature.tresenraya.data.GameDataRepository
 import com.ugdgomezdiez.tresenraya.feature.tresenraya.data.xml.GameXmlLocalDataSource
+import com.ugdgomezdiez.tresenraya.feature.tresenraya.domain.CleanBoardUseCase
 import com.ugdgomezdiez.tresenraya.feature.tresenraya.domain.GetGameUseCase
 import com.ugdgomezdiez.tresenraya.feature.tresenraya.domain.GetTurnUseCase
+import com.ugdgomezdiez.tresenraya.feature.tresenraya.domain.Piece
 import com.ugdgomezdiez.tresenraya.feature.tresenraya.domain.SetGameTurnUseCase
 import com.ugdgomezdiez.tresenraya.feature.tresenraya.presentation.adapter.GameAdapter
 
@@ -44,10 +46,19 @@ class GameFragment : Fragment() {
                         this.requireContext(), Gson()
                     )
                 )
+            ),
+            CleanBoardUseCase(
+                GameDataRepository(
+                    GameXmlLocalDataSource(
+                        this.requireContext(), Gson()
+                    )
+                )
             )
         )
     }
 
+    var boardActual: Array<Array<Piece>>  = piecesArray
+    var boardWin: Boolean = false
 
 
     override fun onCreateView(
@@ -79,6 +90,10 @@ class GameFragment : Fragment() {
                 )
                 gameAdapter.setEvent {
                     viewModel.setPiece(it)
+                    boardWin = winCondition(boardActual)
+                    if (boardWin == true){
+                        viewModel.cleanBoard()
+                    }
                 }
                 adapter = gameAdapter
             }
@@ -95,11 +110,43 @@ class GameFragment : Fragment() {
                 } else {
                     viewModel.getBoard()
                     val boardGame = it.board.flatten().toMutableList()
+                    boardActual = it.board
                     gameAdapter.submitList(boardGame)
 
                 }
             }
         }
         viewModel.uiState.observe(viewLifecycleOwner, observer)
+    }
+
+    private fun winCondition(board: Array<Array<Piece>>): Boolean{
+        return if (board[0][0].selectPiece != null
+            && (board[0][0].selectPiece == board[1][1].selectPiece
+            && board[0][0].selectPiece == board[2][2].selectPiece
+            || board[0][0].selectPiece == board[0][2].selectPiece
+            && board[0][0].selectPiece == board[0][1].selectPiece
+            || board[0][0].selectPiece == board[1][0].selectPiece
+            && board[0][0].selectPiece == board[2][0].selectPiece
+                    )){
+            true
+        }else if(board[1][1].selectPiece != null
+            && (board[1][1].selectPiece == board[0][1].selectPiece
+            && board[1][1].selectPiece == board[2][1].selectPiece
+            || board[1][1].selectPiece == board[1][0].selectPiece
+            && board[1][1].selectPiece == board[1][2].selectPiece
+            || board[1][1].selectPiece == board[0][2].selectPiece
+            && board[1][1].selectPiece == board[2][0].selectPiece
+                    )){
+            true
+        }else if(board[2][2].selectPiece != null
+            && (board[2][2].selectPiece == board[2][1].selectPiece
+                    && board[2][2].selectPiece == board[2][0].selectPiece
+                    || board[2][2].selectPiece == board[1][2].selectPiece
+                    && board[2][2].selectPiece == board[0][2].selectPiece
+                    )){
+            true
+        }else{
+            false
+        }
     }
 }
