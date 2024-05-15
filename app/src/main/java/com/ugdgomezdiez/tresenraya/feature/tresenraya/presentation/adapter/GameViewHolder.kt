@@ -9,17 +9,20 @@ import com.ugdgomezdiez.tresenraya.feature.tresenraya.domain.Piece
 class GameViewHolder(val view: View): RecyclerView.ViewHolder(view) {
     private lateinit var binding: ItemPieceBinding
 
-    fun bind(model: Piece?, onClick: (Piece) -> Unit) {
+    fun bind(model: Piece, onClick: (Piece) -> Unit) {
         binding = ItemPieceBinding.bind(view)
         binding.apply {
-            if (model?.selectPiece == true) {
+            //piece.setImageResource(R.drawable.ic_check)
+            if (model.selectPiece == 1) {
                 piece.setImageResource(R.drawable.ic_x)
 
-            } else if(model?.selectPiece == false) {
+            } else if(model.selectPiece == 2) {
                 piece.setImageResource(R.drawable.ic_circle)
+            } else if(model.selectPiece == 0){
+                piece.setImageResource(R.drawable.ic_check)
             }
             view.setOnClickListener {
-                onClick.invoke(model!!)
+                onClick.invoke(model)
             }
         }
     }

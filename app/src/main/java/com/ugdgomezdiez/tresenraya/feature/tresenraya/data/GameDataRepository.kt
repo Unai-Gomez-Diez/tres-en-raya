@@ -12,7 +12,7 @@ class GameDataRepository(
         return if(value == null){
             val piecesArray = Array(3) { i ->
                 Array(3) { j ->
-                    Piece(i, j, null)
+                    Piece(i, j, 0)
                 }
             }
             gameXmlLocalDataSource.setPiece(piecesArray)
@@ -26,11 +26,11 @@ class GameDataRepository(
         val board = gameXmlLocalDataSource.getGame()
         var turn = getTurn()
         return if (board != null) {
-            if(board[piece.valueX][piece.valueY].selectPiece == null){
+            if(board[piece.valueX][piece.valueY].selectPiece == 0){
                 if (turn%2 == 0){
-                    piece.selectPiece = true
+                    piece.selectPiece = 1
                 }else{
-                    piece.selectPiece = false
+                    piece.selectPiece = 2
                 }
                 turn +=1
                 gameXmlLocalDataSource.setTurn(turn)

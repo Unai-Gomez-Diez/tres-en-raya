@@ -17,8 +17,8 @@ class GameXmlLocalDataSource(val context: Context, val gson: Gson)
 
     }
 
-    override fun setPiece(trun: Array<Array<Piece>>) {
-        sharedPref.edit().putString("game", gson.toJson(trun)).apply()
+    override fun setPiece(board: Array<Array<Piece>>) {
+        sharedPref.edit().putString("game", gson.toJson(board)).apply()
     }
 
     override fun setTurn(turn: Int) {

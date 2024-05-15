@@ -91,7 +91,7 @@ class GameFragment : Fragment() {
                 gameAdapter.setEvent {
                     viewModel.setPiece(it)
                     boardWin = winCondition(boardActual)
-                    if (boardWin == true){
+                    if (boardWin == true || EmptyCondition(boardActual) == true){
                         viewModel.cleanBoard()
                     }
                 }
@@ -109,8 +109,8 @@ class GameFragment : Fragment() {
 
                 } else {
                     viewModel.getBoard()
-                    val boardGame = it.board.flatten().toMutableList()
                     boardActual = it.board
+                    val boardGame = it.board.flatten().toMutableList()
                     gameAdapter.submitList(boardGame)
 
                 }
@@ -120,7 +120,7 @@ class GameFragment : Fragment() {
     }
 
     private fun winCondition(board: Array<Array<Piece>>): Boolean{
-        return if (board[0][0].selectPiece != null
+        return if (board[0][0].selectPiece != 0
             && (board[0][0].selectPiece == board[1][1].selectPiece
             && board[0][0].selectPiece == board[2][2].selectPiece
             || board[0][0].selectPiece == board[0][2].selectPiece
@@ -129,7 +129,7 @@ class GameFragment : Fragment() {
             && board[0][0].selectPiece == board[2][0].selectPiece
                     )){
             true
-        }else if(board[1][1].selectPiece != null
+        }else if(board[1][1].selectPiece != 0
             && (board[1][1].selectPiece == board[0][1].selectPiece
             && board[1][1].selectPiece == board[2][1].selectPiece
             || board[1][1].selectPiece == board[1][0].selectPiece
@@ -138,12 +138,27 @@ class GameFragment : Fragment() {
             && board[1][1].selectPiece == board[2][0].selectPiece
                     )){
             true
-        }else if(board[2][2].selectPiece != null
+        }else if(board[2][2].selectPiece != 0
             && (board[2][2].selectPiece == board[2][1].selectPiece
                     && board[2][2].selectPiece == board[2][0].selectPiece
                     || board[2][2].selectPiece == board[1][2].selectPiece
                     && board[2][2].selectPiece == board[0][2].selectPiece
                     )){
+            true
+        }else{
+            false
+        }
+    }
+    private fun EmptyCondition(board: Array<Array<Piece>>): Boolean{
+        var count = 0
+        for (i in board.indices) {
+            for (j in board[i].indices) {
+                if(board[i][j].selectPiece != 0){
+                    count++
+                }
+            }
+        }
+        return if (count == 9){
             true
         }else{
             false

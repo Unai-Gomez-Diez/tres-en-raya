@@ -87,6 +87,6 @@ class GameViewModel(private val setGameUseCase: SetGameTurnUseCase,
 }
 val piecesArray = Array(3) { i ->
     Array(3) { j ->
-        Piece(i, j, null)
+        Piece(i, j, 0)
     }
 }
