@@ -10,6 +10,7 @@ import com.ugdgomezdiez.tresenraya.feature.tresenraya.domain.GetGameUseCase
 import com.ugdgomezdiez.tresenraya.feature.tresenraya.domain.GetTurnUseCase
 import com.ugdgomezdiez.tresenraya.feature.tresenraya.domain.Piece
 import com.ugdgomezdiez.tresenraya.feature.tresenraya.domain.SetGameTurnUseCase
+import com.ugdgomezdiez.tresenraya.feature.tresenraya.domain.Turn
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -71,7 +72,7 @@ class GameViewModel(private val setGameUseCase: SetGameTurnUseCase,
         _uistate.postValue(UiState(board = board))
     }
 
-    private fun responseTurn(turn: Int){
+    private fun responseTurn(turn: Turn){
         _uistate.postValue(UiState(turn = turn))
     }
 
@@ -79,14 +80,16 @@ class GameViewModel(private val setGameUseCase: SetGameTurnUseCase,
         val isLoading: Boolean = false,
         val error: Error? = null,
         val succes: Boolean? = null,
-        val turn: Int = 0,
+        val turn: Turn? = null,
         val board: Array<Array<Piece>> = piecesArray
 
     )
 
 }
+var cont = 0
 val piecesArray = Array(3) { i ->
     Array(3) { j ->
-        Piece(i, j, 0)
+        cont += 1
+        Piece(cont,i, j, 0)
     }
 }

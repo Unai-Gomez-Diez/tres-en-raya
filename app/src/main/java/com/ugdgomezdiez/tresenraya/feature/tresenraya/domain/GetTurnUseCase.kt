@@ -4,7 +4,7 @@ import com.ugdgomezdiez.tresenraya.app.domain.Either
 import com.ugdgomezdiez.tresenraya.app.domain.right
 
 class GetTurnUseCase(val gameRepository: GameRepository) {
-    operator fun invoke(): Either<Error, Int>{
+    operator fun invoke(): Either<Error, Turn>{
         return gameRepository.getTurn().right()
     }
 }

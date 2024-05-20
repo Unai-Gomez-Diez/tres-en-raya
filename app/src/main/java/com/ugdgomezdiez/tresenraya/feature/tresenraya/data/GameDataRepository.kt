@@ -1,21 +1,25 @@
 package com.ugdgomezdiez.tresenraya.feature.tresenraya.data
 
-import com.ugdgomezdiez.tresenraya.feature.tresenraya.data.xml.GameXmlLocalDataSource
+import com.ugdgomezdiez.tresenraya.feature.tresenraya.data.room.GameDbLocalDataSource
 import com.ugdgomezdiez.tresenraya.feature.tresenraya.domain.GameRepository
 import com.ugdgomezdiez.tresenraya.feature.tresenraya.domain.Piece
+import com.ugdgomezdiez.tresenraya.feature.tresenraya.domain.Turn
 
 class GameDataRepository(
-    private val gameXmlLocalDataSource: GameXmlLocalDataSource
+    private val gameDbLocalDataSource: GameDbLocalDataSource
 ): GameRepository {
     override fun getGame(): Array<Array<Piece>> {
-        val value = gameXmlLocalDataSource.getGame()
-        return if(value == null){
+        val value = gameDbLocalDataSource.getGame()
+        var cont = 0
+        return if(value.isNullOrEmpty()){
             val piecesArray = Array(3) { i ->
                 Array(3) { j ->
-                    Piece(i, j, 0)
+                    cont += 1
+                    Piece(cont,i, j, 0)
+
                 }
             }
-            gameXmlLocalDataSource.setPiece(piecesArray)
+            gameDbLocalDataSource.setPiece(piecesArray)
             piecesArray
         }else{
             value
@@ -23,19 +27,20 @@ class GameDataRepository(
     }
 
     override fun setPiece(piece: Piece): Boolean {
-        val board = gameXmlLocalDataSource.getGame()
+        val board = gameDbLocalDataSource.getGame()
         var turn = getTurn()
+
         return if (board != null) {
             if(board[piece.valueX][piece.valueY].selectPiece == 0){
-                if (turn%2 == 0){
+                if (turn.turn%2 == 0){
                     piece.selectPiece = 1
                 }else{
                     piece.selectPiece = 2
                 }
-                turn +=1
-                gameXmlLocalDataSource.setTurn(turn)
+                turn.turn +=1
+                gameDbLocalDataSource.setTurn(turn)
                 board[piece.valueX][piece.valueY] = piece
-                gameXmlLocalDataSource.setPiece(board)
+                gameDbLocalDataSource.setPiece(board)
                 true
             }else{
                 false
@@ -45,18 +50,18 @@ class GameDataRepository(
         }
     }
 
-    override fun getTurn(): Int {
-        val turn = gameXmlLocalDataSource.getTurn()
+    override fun getTurn(): Turn {
+        val turn = gameDbLocalDataSource.getTurn()
         return if (turn == null){
-            gameXmlLocalDataSource.setTurn(0)
-            0
+            gameDbLocalDataSource.setTurn(Turn(1,0))
+            Turn(1,0)
         }else{
             turn
         }
     }
 
     override fun cleanBoard(){
-        gameXmlLocalDataSource.cleanBoard()
+        gameDbLocalDataSource.cleanBoard()
 
     }
 }

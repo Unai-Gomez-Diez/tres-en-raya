@@ -8,10 +8,10 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.gson.Gson
 import com.ugdgomezdiez.tresenraya.databinding.FragmentGameBinding
+import com.ugdgomezdiez.tresenraya.feature.tresenraya.data.AppDatabase
 import com.ugdgomezdiez.tresenraya.feature.tresenraya.data.GameDataRepository
-import com.ugdgomezdiez.tresenraya.feature.tresenraya.data.xml.GameXmlLocalDataSource
+import com.ugdgomezdiez.tresenraya.feature.tresenraya.data.room.GameDbLocalDataSource
 import com.ugdgomezdiez.tresenraya.feature.tresenraya.domain.CleanBoardUseCase
 import com.ugdgomezdiez.tresenraya.feature.tresenraya.domain.GetGameUseCase
 import com.ugdgomezdiez.tresenraya.feature.tresenraya.domain.GetTurnUseCase
@@ -28,29 +28,33 @@ class GameFragment : Fragment() {
         GameViewModel(
             SetGameTurnUseCase(
                 GameDataRepository(
-                    GameXmlLocalDataSource(
-                        this.requireContext(), Gson()
+                    GameDbLocalDataSource(
+                        AppDatabase.getInstance(requireContext()).gameDao(),
+                        AppDatabase.getInstance(requireContext()).turnDao()
                     )
                 )
             ),
             GetGameUseCase(
                 GameDataRepository(
-                    GameXmlLocalDataSource(
-                        this.requireContext(), Gson()
+                    GameDbLocalDataSource(
+                        AppDatabase.getInstance(requireContext()).gameDao(),
+                        AppDatabase.getInstance(requireContext()).turnDao()
                     )
                 )
             ),
             GetTurnUseCase(
                 GameDataRepository(
-                    GameXmlLocalDataSource(
-                        this.requireContext(), Gson()
+                    GameDbLocalDataSource(
+                        AppDatabase.getInstance(requireContext()).gameDao(),
+                        AppDatabase.getInstance(requireContext()).turnDao()
                     )
                 )
             ),
             CleanBoardUseCase(
                 GameDataRepository(
-                    GameXmlLocalDataSource(
-                        this.requireContext(), Gson()
+                    GameDbLocalDataSource(
+                        AppDatabase.getInstance(requireContext()).gameDao(),
+                        AppDatabase.getInstance(requireContext()).turnDao()
                     )
                 )
             )

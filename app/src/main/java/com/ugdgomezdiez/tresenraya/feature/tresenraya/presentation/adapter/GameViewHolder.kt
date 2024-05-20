@@ -12,7 +12,6 @@ class GameViewHolder(val view: View): RecyclerView.ViewHolder(view) {
     fun bind(model: Piece, onClick: (Piece) -> Unit) {
         binding = ItemPieceBinding.bind(view)
         binding.apply {
-            //piece.setImageResource(R.drawable.ic_check)
             if (model.selectPiece == 1) {
                 piece.setImageResource(R.drawable.ic_x)
 
