@@ -12,8 +12,8 @@ class GameDbLocalDataSource(private val gameDao: GameDao,
         return if (gameEntities.isNullOrEmpty()) {
             emptyArray()
         } else {
-            val rows = 3 // Ajusta el número de filas según tu tablero
-            val columns = 3 // Ajusta el número de columnas según tu tablero
+            val rows = 3
+            val columns = 3
             val gameBoard = Array(rows) { arrayOfNulls<Piece>(columns) }
             for (entity in gameEntities) {
                 gameBoard[entity.valueY][entity.valueX] = entity.toDomain()

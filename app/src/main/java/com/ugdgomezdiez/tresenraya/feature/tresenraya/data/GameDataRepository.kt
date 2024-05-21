@@ -9,6 +9,7 @@ class GameDataRepository(
     private val gameDbLocalDataSource: GameDbLocalDataSource
 ): GameRepository {
     override fun getGame(): Array<Array<Piece>> {
+
         val value = gameDbLocalDataSource.getGame()
         var cont = 0
         return if(value.isNullOrEmpty()){
@@ -31,7 +32,7 @@ class GameDataRepository(
         var turn = getTurn()
 
         return if (board != null) {
-            if(board[piece.valueX][piece.valueY].selectPiece == 0){
+            if(board[piece.valueY][piece.valueX].selectPiece == 0){
                 if (turn.turn%2 == 0){
                     piece.selectPiece = 1
                 }else{
@@ -39,7 +40,7 @@ class GameDataRepository(
                 }
                 turn.turn +=1
                 gameDbLocalDataSource.setTurn(turn)
-                board[piece.valueX][piece.valueY] = piece
+                board[piece.valueY][piece.valueX] = piece
                 gameDbLocalDataSource.setPiece(board)
                 true
             }else{
