@@ -9,7 +9,9 @@ class GameDbRemoteDataSource(
 ): GameRemoteDataSource {
     override suspend fun getGame(): Array<Array<Piece>>? {
         val datos = firebase.getReference("board")
-            .get().await().children.map {
+            .get()
+            .await()
+            .children.map {
                 it.getValue(GameDbRemoteModel::class.java)!!.toDomain()
             }.toTypedArray()
         val gameBoard = arrayOf(datos)
