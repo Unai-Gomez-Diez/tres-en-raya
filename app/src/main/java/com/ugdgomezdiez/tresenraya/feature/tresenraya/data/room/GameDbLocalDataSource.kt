@@ -4,9 +4,10 @@ import com.ugdgomezdiez.tresenraya.feature.tresenraya.data.GameLocalDataSource
 import com.ugdgomezdiez.tresenraya.feature.tresenraya.domain.Piece
 import com.ugdgomezdiez.tresenraya.feature.tresenraya.domain.Turn
 
-class GameDbLocalDataSource(private val gameDao: GameDao,
-    private val turnDao: TurnDao)
-    :GameLocalDataSource{
+class GameDbLocalDataSource(
+    private val gameDao: GameDao,
+    private val turnDao: TurnDao
+) : GameLocalDataSource {
     override fun getGame(): Array<Array<Piece>>? {
         val gameEntities = gameDao.getGame()
         return if (gameEntities.isNullOrEmpty()) {
