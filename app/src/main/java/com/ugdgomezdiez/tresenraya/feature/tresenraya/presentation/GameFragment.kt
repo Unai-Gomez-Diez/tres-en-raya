@@ -8,9 +8,12 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.firebase.FirebaseApp
+import com.google.firebase.database.FirebaseDatabase
 import com.google.gson.Gson
 import com.ugdgomezdiez.tresenraya.databinding.FragmentGameBinding
 import com.ugdgomezdiez.tresenraya.feature.tresenraya.data.GameDataRepository
+import com.ugdgomezdiez.tresenraya.feature.tresenraya.data.remote.GameDbRemoteDataSource
 import com.ugdgomezdiez.tresenraya.feature.tresenraya.data.xml.GameXmlLocalDataSource
 import com.ugdgomezdiez.tresenraya.feature.tresenraya.domain.CleanBoardUseCase
 import com.ugdgomezdiez.tresenraya.feature.tresenraya.domain.GetGameUseCase
@@ -30,6 +33,9 @@ class GameFragment : Fragment() {
                 GameDataRepository(
                     GameXmlLocalDataSource(
                         this.requireContext(), Gson()
+                    ),
+                    GameDbRemoteDataSource(
+                        FirebaseDatabase.getInstance()
                     )
                 )
             ),
@@ -37,6 +43,9 @@ class GameFragment : Fragment() {
                 GameDataRepository(
                     GameXmlLocalDataSource(
                         this.requireContext(), Gson()
+                    ),
+                    GameDbRemoteDataSource(
+                        FirebaseDatabase.getInstance()
                     )
                 )
             ),
@@ -44,6 +53,9 @@ class GameFragment : Fragment() {
                 GameDataRepository(
                     GameXmlLocalDataSource(
                         this.requireContext(), Gson()
+                    ),
+                    GameDbRemoteDataSource(
+                        FirebaseDatabase.getInstance()
                     )
                 )
             ),
@@ -51,6 +63,9 @@ class GameFragment : Fragment() {
                 GameDataRepository(
                     GameXmlLocalDataSource(
                         this.requireContext(), Gson()
+                    ),
+                    GameDbRemoteDataSource(
+                        FirebaseDatabase.getInstance()
                     )
                 )
             )
@@ -68,7 +83,7 @@ class GameFragment : Fragment() {
     ): View {
         _binding = FragmentGameBinding.inflate(inflater, container, false)
         setupView()
-
+        FirebaseApp.initializeApp(requireContext())
         return binding.root
     }
 

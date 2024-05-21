@@ -1,29 +1,31 @@
 package com.ugdgomezdiez.tresenraya.feature.tresenraya.data
 
+import com.ugdgomezdiez.tresenraya.feature.tresenraya.data.remote.GameDbRemoteDataSource
 import com.ugdgomezdiez.tresenraya.feature.tresenraya.data.xml.GameXmlLocalDataSource
 import com.ugdgomezdiez.tresenraya.feature.tresenraya.domain.GameRepository
 import com.ugdgomezdiez.tresenraya.feature.tresenraya.domain.Piece
 
 class GameDataRepository(
-    private val gameXmlLocalDataSource: GameXmlLocalDataSource
+    private val gameXmlLocalDataSource: GameXmlLocalDataSource,
+    private val gameDbRemoteDataSource: GameDbRemoteDataSource
 ): GameRepository {
-    override fun getGame(): Array<Array<Piece>> {
-        val value = gameXmlLocalDataSource.getGame()
+    override suspend fun getGame(): Array<Array<Piece>> {
+        val value = gameDbRemoteDataSource.getGame()
         return if(value == null){
             val piecesArray = Array(3) { i ->
                 Array(3) { j ->
                     Piece(i, j, 0)
                 }
             }
-            gameXmlLocalDataSource.setPiece(piecesArray)
+            gameDbRemoteDataSource.setPiece(piecesArray)
             piecesArray
         }else{
             value
         }
     }
 
-    override fun setPiece(piece: Piece): Boolean {
-        val board = gameXmlLocalDataSource.getGame()
+    override suspend fun setPiece(piece: Piece): Boolean {
+        val board = gameDbRemoteDataSource.getGame()
         var turn = getTurn()
         return if (board != null) {
             if(board[piece.valueX][piece.valueY].selectPiece == 0){
@@ -35,7 +37,7 @@ class GameDataRepository(
                 turn +=1
                 gameXmlLocalDataSource.setTurn(turn)
                 board[piece.valueX][piece.valueY] = piece
-                gameXmlLocalDataSource.setPiece(board)
+                gameDbRemoteDataSource.setPiece(board)
                 true
             }else{
                 false

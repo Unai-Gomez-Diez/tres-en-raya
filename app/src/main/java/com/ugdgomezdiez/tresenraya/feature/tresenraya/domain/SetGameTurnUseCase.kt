@@ -4,7 +4,7 @@ import com.ugdgomezdiez.tresenraya.app.domain.Either
 import com.ugdgomezdiez.tresenraya.app.domain.right
 
 class SetGameTurnUseCase(private val gameRepository: GameRepository) {
-    operator fun invoke(piece: Piece): Either<Error, Boolean>{
+    suspend operator fun invoke(piece: Piece): Either<Error, Boolean>{
         return gameRepository.setPiece(piece).right()
     }
 }
