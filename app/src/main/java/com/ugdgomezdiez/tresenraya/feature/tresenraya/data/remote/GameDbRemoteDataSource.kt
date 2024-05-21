@@ -8,20 +8,12 @@ class GameDbRemoteDataSource(
     private val firebase: FirebaseDatabase
 ): GameRemoteDataSource {
     override suspend fun getGame(): Array<Array<Piece>>? {
-        return try {
-            val gameBoard = firebase.getReference("board")
-                .get().await()
-                .children.map { dataSnapshot ->
-                    dataSnapshot.children.mapNotNull { pieceDataSnapshot ->
-                        pieceDataSnapshot.getValue(GameDbRemoteModel::class.java)?.toDomain()
-                    }.toTypedArray()
-                }.toTypedArray()
-
-            gameBoard
-        } catch (e: Exception) {
-            // Maneja cualquier excepción aquí
-            null
-        }
+        val datos = firebase.getReference("board")
+            .get().await().children.map {
+                it.getValue(GameDbRemoteModel::class.java)!!.toDomain()
+            }.toTypedArray()
+        val gameBoard = arrayOf(datos)
+        return gameBoard
     }
 
     override fun setPiece(board: Array<Array<Piece>>) {
