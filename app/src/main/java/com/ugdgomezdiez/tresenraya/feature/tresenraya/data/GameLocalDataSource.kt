@@ -5,7 +5,7 @@ import com.ugdgomezdiez.tresenraya.feature.tresenraya.domain.Turn
 
 interface GameLocalDataSource {
 
-    fun getGame(): Array<Array<Piece>>?
+    fun getGame(): Array<Array<Piece>>
     fun setPiece(board: Array<Array<Piece>>)
 
     fun setTurn(turn: Turn)

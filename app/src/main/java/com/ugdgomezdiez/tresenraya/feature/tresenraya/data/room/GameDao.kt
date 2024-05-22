@@ -9,7 +9,7 @@ import com.ugdgomezdiez.tresenraya.feature.tresenraya.domain.Piece
 @Dao
 interface GameDao {
     @Query("SELECT * FROM board")
-    fun getGame(): List<GameEntity>?
+    fun getGame(): List<GameEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun setGame(board: List<GameEntity>)
