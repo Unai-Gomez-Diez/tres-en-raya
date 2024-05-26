@@ -28,7 +28,7 @@ class GameDataRepository(
         val board = gameDbRemoteDataSource.getGame()
         var turn = getTurn()
         return if (board != null) {
-            if(board[piece.valueX][piece.valueY].selectPiece == 0){
+            if(board[piece.valueY][piece.valueX].selectPiece == 0){
                 if (turn%2 == 0){
                     piece.selectPiece = 1
                 }else{
@@ -36,7 +36,7 @@ class GameDataRepository(
                 }
                 turn +=1
                 gameXmlLocalDataSource.setTurn(turn)
-                board[piece.valueX][piece.valueY] = piece
+                board[piece.valueY][piece.valueX] = piece
                 gameDbRemoteDataSource.setPiece(board)
                 true
             }else{
@@ -58,7 +58,7 @@ class GameDataRepository(
     }
 
     override fun cleanBoard(){
-        gameXmlLocalDataSource.cleanBoard()
+        gameDbRemoteDataSource.clearGame()
 
     }
 }
